@@ -1,79 +1,49 @@
-# Svelte library
+# Clase 7: Supervisión en Tiempo Real y Dashboards Administrativos en Millones de ₲ (FIUNA)
 
-Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
+Suite pedagógica interactiva que materializa **8 laboratorios demostrativos** divididos en dos grandes bloques:
+- **Parte I (Proyectos 1 al 4):** La frontera entre el **Tiempo Real Físico** (*Hard/Firm*, kHz, microsegundos) y el **Tiempo Real de Supervisión Operativa** (*Soft*, 60 fps, detección de jitter SSE e inercia mecánica).
+- **Parte II (Proyectos 5 al 8):** **Dashboards Administrativos y Financieros en Millones de Guaraníes ($\text{₲}$)** que **NO requieren operaciones en tiempo real**, sino **cortes consistentes deterministas (SSR), simulaciones tarifarias/ROI e idempotencia transaccional** conectados 100% a **FastAPI**.
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
+---
 
-## Creating a project
+## 🚀 Cómo Ejecutar el Entorno Completo (2 Terminales)
 
-If you're seeing this, you've probably already done this step. Congrats!
+> [!IMPORTANT]
+> **Conexión 100% Estricta a FastAPI (`http://localhost:8007`):**
+> Los Proyectos 2, 4, 5, 6, 7 y 8 obtienen y mutan el **100% de sus datos en el servidor FastAPI** (sin datos harcodeados de respaldo en el frontend). Debes tener corriendo FastAPI en el puerto `8007`.
 
-```sh
-# create a new project in the current directory
-npx sv create
+### Terminal 1: Servidor Industrial y Financiero (FastAPI — Puerto 8007)
 
-# create a new project in my-app
-npx sv create my-app
+```bash
+npm run backend
+# O manualmente:
+cd backend_fastapi && ~/.venv/bin/uvicorn main:app --reload --port 8007
 ```
+- Documentación interactiva Swagger UI: `http://localhost:8007/docs`
 
-To recreate this project with the same configuration:
+### Terminal 2: Aplicación SvelteKit (Puerto 5173)
 
-```sh
-# recreate this project
-npx sv@1.1.1 create --template library --types ts --install npm app-clase-6
-```
-
-## Adding features
-
-Add features to your project with `sv add`:
-
-```sh
-npx sv add
-```
-
-For example, to add Tailwind CSS:
-
-```sh
-npx sv add tailwindcss
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
+```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
+- Abre en el navegador: `http://localhost:5173`
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+---
 
-## Building
+## 🧭 Mapa de los 8 Laboratorios
 
-To build your library:
+### Parte I: Supervisión en Tiempo Real (Proyectos 1–4)
+| Ruta | Proyecto | Endpoint FastAPI / Origen |
+| :--- | :--- | :--- |
+| `/proyecto-1-estres` | **1. El Banco de Estrés (kHz vs. 60 fps)** | Web Worker local (`100–1000 Hz`) |
+| `/proyecto-2-jitter` | **2. El Semáforo de Latencia y Jitter** | `GET /api/jitter/stream` + `POST /api/jitter/config` |
+| `/proyecto-3-eco` | **3. El Eco Visual (Consigna vs. Inercia)** | Modelo EDO 2do orden + Gauge SVG doble aguja |
+| `/proyecto-4-scada` | **4. Dashboard SCADA Completo** | `GET /api/sensores`, `GET /api/scada/stream`, `POST /api/planta/paro-emergencia` |
 
-```sh
-npm pack
-```
-
-To create a production version of your showcase app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```sh
-npm publish
-```
+### Parte II: Dashboards Administrativos en Millones de ₲ (Proyectos 5–8)
+| Ruta | Proyecto | Endpoints FastAPI (`http://localhost:8007`) |
+| :--- | :--- | :--- |
+| `/admin-1-oee` | **5. OEE y Lucro Cesante por Turno (₲)** | `GET /api/admin/oee` + `POST /api/admin/oee/registrar-paro-auditado` |
+| `/admin-2-energia-ande` | **6. Auditoría Energética Pliego ANDE (₲)** | `GET /api/admin/energia-ande` + `POST /api/admin/energia-ande/simular` |
+| `/admin-3-capex-mantenimiento` | **7. Matriz CapEx/OpEx y Órdenes con Idempotencia (₲)** | `GET /api/admin/capex` + `POST /api/admin/capex/aprobar-orden` |
+| `/admin-4-conciliacion-lotes` | **8. Conciliación de Lotes MES vs. ERP (₲)** | `GET /api/admin/conciliacion-lotes` + `POST /api/admin/conciliacion-lotes/dictamen` |
